@@ -6,13 +6,28 @@ import (
 	"log"
 
 	simple "github.com/caiopapai/go-protocol-buffer-study/src"
+	"github.com/golang/protobuf/jsonpb"
 	"github.com/golang/protobuf/proto"
 )
 
 func main() {
 	sm := doSimple()
+	sm2 := &simple.SimpleMessage{}
+
 	writeToFile("simple.bin", sm)
-	readFromFile("simple.bin", sm)
+	readFromFile("simple.bin", sm2)
+
+	smString := toJSON(sm2)
+	fmt.Print(smString)
+}
+
+func toJSON(pb proto.Message) string {
+	marshaler := jsonpb.Marshaler{}
+	out, err := marshaler.MarshalToString(pb)
+	if err != nil {
+		log.Fatal("Error ", err.Error())
+	}
+	return out
 }
 
 func writeToFile(fname string, pb proto.Message) error {
