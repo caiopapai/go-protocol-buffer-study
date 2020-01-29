@@ -4,19 +4,19 @@ package enumeration;
 
 option go_package = "enumspb";
 
-message DayOfWeek{
 
-    enum Day{
-        UNDEFINED_DAY = 0;
-        SEGUNDA = 1;
-        TERCA = 2;
-        QUARTA = 3;
-        QUINTA = 4;
-        SEXTA = 5;
-        SABADO = 6;
-        DOMINGO = 7;
-    }
+message EnumMessage{
+    int32 id = 1;
+    DayOfWeek day_of_week = 2;
+}
 
-    Day day_of_week = 1;
-
+enum DayOfWeek{
+    UNDEFINED_DAY = 0;
+    SEGUNDA = 1;
+    TERCA = 2;
+    QUARTA = 3;
+    QUINTA = 4;
+    SEXTA = 5;
+    SABADO = 6;
+    DOMINGO = 7;
 }

@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 
+	enumspb "github.com/caiopapai/go-protocol-buffer-study/enum"
 	simple "github.com/caiopapai/go-protocol-buffer-study/src"
 	"github.com/golang/protobuf/jsonpb"
 	"github.com/golang/protobuf/proto"
@@ -23,6 +24,9 @@ func main() {
 	sm3 := &simple.SimpleMessage{}
 	fromJSON(smString, sm3)
 	fmt.Println("JSON to Protocol Buffer: ", sm3)
+
+	doEnum()
+
 }
 
 func toJSON(pb proto.Message) string {
@@ -40,6 +44,15 @@ func fromJSON(json string, pb proto.Message) {
 		log.Fatal("Error ", err.Error())
 	}
 
+}
+
+func doEnum() {
+	en := enumspb.EnumMessage{
+		Id:        32,
+		DayOfWeek: enumspb.DayOfWeek_QUARTA,
+	}
+
+	fmt.Println(en)
 }
 
 func writeToFile(fname string, pb proto.Message) error {
