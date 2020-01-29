@@ -18,7 +18,11 @@ func main() {
 	readFromFile("simple.bin", sm2)
 
 	smString := toJSON(sm2)
-	fmt.Print(smString)
+	fmt.Println("Protocol Buffer to JSON: ", smString)
+
+	sm3 := &simple.SimpleMessage{}
+	fromJSON(smString, sm3)
+	fmt.Println("JSON to Protocol Buffer: ", sm3)
 }
 
 func toJSON(pb proto.Message) string {
@@ -28,6 +32,14 @@ func toJSON(pb proto.Message) string {
 		log.Fatal("Error ", err.Error())
 	}
 	return out
+}
+
+func fromJSON(json string, pb proto.Message) {
+	err := jsonpb.UnmarshalString(json, pb)
+	if err != nil {
+		log.Fatal("Error ", err.Error())
+	}
+
 }
 
 func writeToFile(fname string, pb proto.Message) error {
@@ -42,7 +54,7 @@ func writeToFile(fname string, pb proto.Message) error {
 		return err
 	}
 
-	fmt.Println("Written")
+	fmt.Println("Write To File :", out)
 	return nil
 }
 
@@ -59,7 +71,7 @@ func readFromFile(fname string, pb proto.Message) error {
 		return err2
 	}
 
-	fmt.Println("Message From File", pb)
+	fmt.Println("Message From File: ", pb)
 
 	return nil
 }
@@ -72,7 +84,7 @@ func doSimple() *simple.SimpleMessage {
 		SimpleList: []int32{4, 5, 6, 7},
 	}
 
-	fmt.Println("Mensagem: ", sm)
+	fmt.Println("Protocol Buffer Message: ", sm)
 
 	return &sm
 }
