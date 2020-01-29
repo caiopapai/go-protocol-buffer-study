@@ -12,21 +12,40 @@ import (
 func main() {
 	sm := doSimple()
 	writeToFile("simple.bin", sm)
+	readFromFile("simple.bin", sm)
 }
 
 func writeToFile(fname string, pb proto.Message) error {
 	out, err := proto.Marshal(pb)
 	if err != nil {
-		log.Fatal("Error ", err)
+		log.Fatal("Error ", err.Error())
 		return err
 	}
 
 	if err := ioutil.WriteFile(fname, out, 0644); err != nil {
-		log.Fatal("Erro ", err)
+		log.Fatal("Erro ", err.Error())
 		return err
 	}
 
 	fmt.Println("Written")
+	return nil
+}
+
+func readFromFile(fname string, pb proto.Message) error {
+	in, err := ioutil.ReadFile(fname)
+	if err != nil {
+		log.Fatal("Error ", err.Error())
+		return err
+	}
+
+	err2 := proto.Unmarshal(in, pb)
+	if err != nil {
+		log.Fatal("Error ", err.Error())
+		return err2
+	}
+
+	fmt.Println("Message From File", pb)
+
 	return nil
 }
 
