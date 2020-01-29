@@ -1,1 +1,2 @@
 protoc -I src/ --go_out=src/ src/simple.proto
+protoc -I enum/ --go_out=enum/ enum/day_of_week.proto
